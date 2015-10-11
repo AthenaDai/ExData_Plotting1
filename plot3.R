@@ -1,0 +1,12 @@
+df<-read.table("C:/Users/adai/Coursera/household_power_consumption.txt", sep=";", header=TRUE, na.strings="?")
+df$Date <- as.Date(df$Date, format = "%d/%m/%Y")
+df.subset <- subset(df, Date>="2007-02-01" & Date<="2007-02-02")
+df.subset$timetemp<-paste(df.subset$Date,df.subset$Time)
+df.subset$Time <- strptime(df.subset$timetemp, format = "%Y-%m-%d %H:%M:%S")
+##Plot3
+png(filename="C:/Users/adai/Coursera/EDA_Assignment1/plot3.png",width = 480, height = 480, units = "px")
+with(df.subset,plot(Time,Sub_metering_1,type='l',xlab="",ylab="Energy sub metering"))
+with(df.subset,points(Time,Sub_metering_2,type='l',col='red'))
+with(df.subset,points(Time,Sub_metering_3,type='l',col='blue'))
+legend("topright",pch=1,col=c("black","red","blue"), legend=c("sub_metering_1","sub_metering_2","sub_metering_3"))
+dev.off()
